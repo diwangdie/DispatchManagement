@@ -1,6 +1,10 @@
 # DispatchManagement
 联表查询，分页，ajax局部刷新
 
+框架SpringMVC,spring,mybatis
+数据库连接池：jdcp
+
+
 知识点（个人理解，有错误欢迎指点）：
 1、面向对象的思想：数据库中可以多个表存不同的信息，但是对应到java中，每个类都是一个完整的整体，
 public class Dispatch extends Base{
@@ -21,3 +25,4 @@ public class Dispatch extends Base{
    不加@reponsebody,那么它返回的是一个jsp页面。可以单独将刷新的内容放置在一个jsp中替换当前页面一个区域的数据。
 想要刷新整页，返回原jsp，替换掉整个body就可以了
    加了@reponsebody，返回的就是一个值。
+
