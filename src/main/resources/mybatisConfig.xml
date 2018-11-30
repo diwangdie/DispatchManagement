@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 全局映射器启用或禁用缓存 -->
+		<setting name="cacheEnabled" value="true" />
+		<!-- 允许 JDBC 支持生成的键。需要适合的驱动。如果设置为 true 则这个设置强制生成的键被使用， 尽管一些驱动拒绝兼容但仍然有效（比如Derby） -->
+		<setting name="useGeneratedKeys" value="true" />
+		<!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新 -->
+		<setting name="defaultExecutorType" value="REUSE" />
+		<!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 设置超时时间，它决定驱动等待一个数据库响应的时间。 -->
+		<setting name="defaultStatementTimeout" value="25000" />
+		<!-- <setting name="maxRequests" value="32" /> -->
+		<!-- <setting name="maxSessions" value="10" /> -->
+		<!-- <setting name="maxTransactions" value="5" /> -->
+		<!-- <setting name="cacheModelsEnabled" value="true" /> -->
+		<!-- <setting name="enhancementEnabled" value="true" /> -->
+		<!-- <setting name="errorTracingEnabled" value="true" /> -->
+		<!-- <setting name="useStatementNamespaces" value="true" /> -->
+	</settings>
+
+	<typeAliases>
+		<!-- java系统类型 -->
+		<typeAlias type="java.lang.String" alias="String" />
+		<typeAlias type="java.lang.Long" alias="Long" />
+		<typeAlias type="java.lang.Integer" alias="Integer" />
+		<typeAlias type="java.util.List" alias="List" />
+		<typeAlias type="java.util.Map" alias="Map" />
+		<!-- 扫描实体类的包 -->
+		<package name="com.zhaoyan.doman" />
+
+	</typeAliases>
+
+</configuration>

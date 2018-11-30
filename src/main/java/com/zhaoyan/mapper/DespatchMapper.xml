@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoyan.dao.DispatchMapper">
+	<resultMap type="Dispatch" id="dispatchmap">
+		<id column="dispatch_id" jdbcType="VARCHAR" property="id" />
+		<result column="dispatch_sum" jdbcType="DECIMAL" property="sum" />
+		<result column="dispatch_addtime" jdbcType="TIMESTAMP"
+			property="addtime" />
+		<result column="dispatch_dispatchDate" jdbcType="TIMESTAMP"
+			property="dispatchDate" />
+		<association property="recipients" javaType="Recipients">
+			<id column="recipients_id" jdbcType="VARCHAR" property="id" />
+			<result column="recipients_name" jdbcType="VARCHAR" property="name" />
+			<result column="recipients_address" jdbcType="VARCHAR"
+				property="address" />
+			<result column="recipients_addtime" jdbcType="TIMESTAMP"
+				property="addtime" />
+			<result column="recipients_phone" jdbcType="VARCHAR" property="phone" />
+		</association>
+		<collection property="dispatchDetailedList" ofType="DispatchDetailed">
+			<id column="dispatchDetailed_id" jdbcType="VARCHAR" property="id" />
+			<result column="dispatchDetailed_discount" jdbcType="DOUBLE"
+				property="discount" />
+			<result column="dispatchDetailed_discountamount" jdbcType="DECIMAL"
+				property="discountamount" />
+			<result column="dispatch_id" jdbcType="VARCHAR" property="dispatchid" />
+			<result column="dispatchDetailed_price" jdbcType="DECIMAL"
+				property="price" />
+			<result column="dispatchDetailed_productname" jdbcType="VARCHAR"
+				property="productname" />
+			<result column="dispatchDetailed_unit" jdbcType="VARCHAR"
+				property="unit" />
+			<result column="dispatchDetailed_unitsname" jdbcType="VARCHAR"
+				property="unitsname" />
+		</collection>
+
+	</resultMap>
+	<select id="selectDispatch" resultMap="dispatchmap"
+		parameterType="Dispatch">
+		SELECT
+		d.id AS dispatch_id,
+		d.sum AS dispatch_sum,
+		d.addtime AS
+		dispatch_addtime,
+		d.dispatchDate AS dispatch_dispatchDate,
+		r.id AS
+		recipients_id,
+		r.name AS recipients_name,
+		r.address AS
+		recipients_address,
+		r.addtime AS recipients_addtime,
+		r.phone AS
+		recipients_phone,
+		dd.id AS dispatchDetailed_id,
+		dd.discount AS
+		dispatchDetailed_discount,
+		dd.discountamount AS
+		dispatchDetailed_discountamount,
+		dd.dispatchid AS dispatch_id,
+		dd.price
+		AS dispatchDetailed_price,
+		dd.productname AS
+		dispatchDetailed_productname,
+		dd.unit AS dispatchDetailed_unit,
+		dd.unitsname AS dispatchDetailed_unitsname
+		FROM
+		dispatch AS d
+		LEFT JOIN
+		recipients AS r ON d.recipientsid=r.id
+		LEFT JOIN dispatchDetailed AS dd
+		ON d.id=dd.dispatchid
+		<where>
+			<if test="id!=null and id!=''">d.id=${id}</if>
+			<if test="recipients!=null">
+				<if test="recipients.name!=null and recipients.name!=''">and r.name like '%${recipients.name}%'</if>
+			</if>
+			<if test="dispatchDetailed!=null">
+				<if
+					test="dispatchDetailed.unitsname!=null and dispatchDetailed.unitsname!=''">and dd.unitsname like '%${dispatchDetailed.unitsname}%'</if>
+			</if>
+		</where>
+		<if test="starLine!=null and starLine!=''">
+		limit (${starLine},${rowCount})
+		</if>
+	</select>
+
+	<select id="selectDispatchCount" resultType="Integer"
+		parameterType="Dispatch">
+		SELECT
+		count(dd.id)
+		FROM
+		dispatch AS d
+		LEFT JOIN recipients AS r ON
+		d.recipientsid=r.id
+		LEFT JOIN dispatchDetailed AS dd ON
+		d.id=dd.dispatchid
+		<where>
+			<if test="id!=null and id!=''">d.id=${id}</if>
+			<if test="recipients!=null">
+				<if test="recipients.name!=null and recipients.name!=''">and r.name like '%${recipients.name}%'</if>
+			</if>
+			<if test="dispatchDetailed!=null">
+				<if
+					test="dispatchDetailed.unitsname!=null and dispatchDetailed.unitsname!=''">and dd.unitsname like '%${dispatchDetailed.unitsname}%'</if>
+			</if>
+		</where>
+		<if test="starLine!=null and starLine!=''">
+		limit ${starLine},${rowCount}
+		</if>
+	</select>
+
+
+</mapper>
